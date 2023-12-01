@@ -1,0 +1,288 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700&display=swap');
+
+body {
+  overflow-x: hidden;
+  font-family: 'Lato', sans-serif;
+  color: #505962;
+}
+
+.offset::before {
+  display: block;
+  content: "";
+  height: 4.2rem;
+  margin-top: -4.2rem;
+}
+#aktuelles.offset::before {
+  display: block;
+  content: "";
+  height: 7.2rem;
+  margin-top: -7.2rem;
+}
+
+p {
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+	hyphens: auto;
+}
+
+/*----- Navigation -----*/
+
+.navbar{
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: .9rem; 
+  letter-spacing: .05rem;
+  background: rgba(17,75, 95, 0.9)!important;
+}
+
+.navbar-nav li {
+  padding-right: .7rem;
+  white-space: nowrap !important;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  color: #fff;
+  padding-top: .8rem;
+}
+
+.navbar-dark .navbar-nav .nav-link.active,
+.navbar-dark .navbar-nav .nav-link:hover { 
+  color:#dcbf43;
+}
+
+/*----- Landing Page -----*/
+
+.home-inner{
+  background-image: url(img/home.jpg);
+}
+
+.caption {
+  width: 100%;
+  max-width: 100%;
+  position:absolute;
+  top: 35%;
+  z-index: 1;
+  color: #fff;
+  text-transform: uppercase;
+  hyphens: none;
+}
+
+.caption h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  letter-spacing: .3rem;
+  text-shadow: .1rem .1rem .8rem #000;
+  hyphens: none;
+}
+
+.caption h3{
+  font-size: 1.5rem;
+  text-shadow: .15rem .15rem .5rem #000;
+  padding-bottom: 1.6rem;
+}
+
+.btn-lg {
+  border-width: medium;
+  border-radius: 0px;
+  padding: .6rem 1.3rem;
+  font-size: 1.1rem;
+}
+
+#news-content {
+  background-color: #e9ecef!important;
+  margin-top: -0.5rem
+}
+
+#news-heading { 
+  padding-top: 0.5rem;
+  height: 2rem;
+  margin-top: -2rem;
+  background: #e9ecef!important;
+}
+
+/*----- Therapie Section -----*/
+
+.narrow {
+  width: 80%;
+  margin: 1rem auto;
+  padding-top: 2rem;
+}
+
+.narrow h1 {
+  font-size: 2.4rem;
+} 
+
+.btn-secondary {
+
+  background-color: #8e5572;
+  color: #fff;
+  border-color: #8e5572;
+}
+
+.btn-secondary:hover {
+  background-color: #6e4358;
+  border-color: #6e4358;
+}
+
+.therapie p {
+  hyphens: auto;
+
+}
+
+/*----- Mich Section -----*/
+#mich img {
+  width: 16rem;
+  border-radius: 50%;
+}
+
+.heading-underline {
+  width: 3rem;
+  height: .2rem;
+  background-color: #88d498;
+  margin: 0 auto 2rem;
+}
+
+/*----- Praxis Section -----*/
+
+.fixed-praxis{
+  background-image: url(img/praxis.jpg);
+  z-index: -1;
+}
+
+.dark {
+  /*background-color: rgb(0, 0, 0, 0.75);*/
+  color: #fff;
+  padding: 7rem 2rem;
+}
+
+.fixed-background h3 {
+  margin-bottom: 2rem;
+}
+
+.fixed-background p {
+  margin-top: 1.5rem;
+  font-size: 1.0rem;
+}
+
+/*----- Contact Section -----*/
+
+footer {
+  background-color: #1a936f;
+  color: #fff;
+  padding: 2rem 0 2rem;
+  margin-top: 1rem;
+}
+
+footer img {
+  height: 16rem;
+  margin: 3rem 0;
+}
+
+footer a {
+  color: #fff;
+}
+
+
+hr.socket {
+  width: 100%;
+  border-top: .2rem solid #666b71;
+  margin-top: 3rem;
+}
+
+/* -- Media Queries -- */
+
+@media (max-width: 767px) {
+  .caption h1 {
+    font-size: 2.2rem;
+    letter-spacing: .15rem;
+    padding-bottom: .5rem;
+  }
+  
+  .caption h3{
+    font-size: 1.2rem;
+    padding-bottom: 1.2rem;
+  }
+  
+  .btn-lg {
+    padding: .5rem 1rem;
+    font-size: 1rem;
+  }
+
+  .narrow h1 {
+    font-size: 1.5rem;
+  } 
+
+}
+
+@media (max-width: 460px) {
+  .caption h1 {
+    font-size: 1.3rem;
+    letter-spacing: .15rem;
+    padding-bottom: .5rem;
+  }
+  
+  .caption h3{
+    font-size: 1.2rem;
+    padding-bottom: 1.2rem;
+  }
+  
+  .btn-lg {
+    padding: .5rem 1rem;
+    font-size: 1rem;
+  }
+
+  .narrow h1 {
+    font-size: 1.5rem;
+  }
+
+  .narrow h4 {
+    font-size: 1.2rem;
+  } 
+
+  #therapie p,ul {
+    font-size: 0.9rem;
+  }
+
+  #mich h2{
+    font-size: 1.3rem;
+    padding-bottom: 1.2rem;
+  }
+
+  #mich img {
+    max-width:10rem;
+  }
+  
+  #mich dt,dd, p {
+    font-size: 0.9rem;
+  }
+  
+  #praxis p {
+    font-size: 0.9rem;
+  }
+
+  #news-heading {
+    font-size: 0.8rem;
+  }
+  #news-heading h5{
+    font-size: 1rem;
+  }
+
+}
+
+/*============ BOOTSTRAP BREAK POINTS:
+
+// Extra small devices (portrait phones, less than 576px)
+// No media query since this is the default in Bootstrap
+
+// Small devices (landscape phones, 576px and up) *modified*
+@media (min-width: 576px) { ... }
+
+// Medium devices (tablets, 768px and up) *modified*
+@media (min-width: 768px) { ... }
+
+// Large devices (desktops, 992px and up) *modified*
+@media (min-width: 960px) { ... }
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { ... }
+=============*/

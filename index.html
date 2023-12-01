@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Kokoschinegg - Praxis für Naturheilverfahren & Energiemedizin</title>
+	<link rel="stylesheet" href="bootstrap-4.1.3-dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="css/fixed.css">
+
+	<!-- Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-151349093-1"></script>
+	<script>
+  		window.dataLayer = window.dataLayer || [];
+  		function gtag(){dataLayer.push(arguments);}
+  		gtag('js', new Date());
+
+  		gtag('config', 'UA-151349093-1');
+	</script>
+
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="js/axios.min.js"></script>
+	<script src="js/moment.min.js"></script>
+	<script src="bootstrap-4.1.3-dist/js/bootstrap.min.js"></script>
+	
+</head>
+
+<body data-spy="scroll" data-target="#navbarResponsive">
+
+	<script>
+		let state = {
+		posts: [],
+		baseUrl: 'https://blog.kokoschinegg.com/wp-json/wp/v2/posts',
+		perPage: '?per_post=1?orderby=date',
+		}
+		//const config = { headers: {'Cache-Control' : 'no-cache'}}
+
+		async function fetchPosts(numPages) {
+		const posts = []
+
+		for (let page = 1; page <= numPages; page += 1) {
+			const post = axios.get(`${state.baseUrl}${state.perPage}&page=${page}`)
+			posts.push(post)
+		}
+
+		await axios.all(posts).then((response) => {
+			const postData = response.map(res => res.data)
+			state.posts = postData.flat()
+		}).catch(e => {
+			console.error(e)
+			$('#aktuelles').addClass("d-none")
+			})
+
+		return true
+		}
+
+		state.posts = fetchPosts(1)
+		.then((data) => {
+			$('#post-title').html(JSON.parse(JSON.stringify(state.posts[0].title.rendered)).toUpperCase())
+			$('#post-date').html(moment(JSON.parse(JSON.stringify(state.posts[0].date)),moment.ISO_8601).format('DD/MM/YYYY'))
+			$('#post-excerpt').html(JSON.parse(JSON.stringify(state.posts[0].excerpt.rendered)))
+			$('#post-link').attr('href',JSON.parse(JSON.stringify(state.posts[0].link)))
+			$('#aktuelles').removeClass("d-none")
+		}).catch(e => {
+			console.log("couldn't set news")
+			})
+	</script>
+
+<!-- Start Home Section-->
+<div id="home">
+
+	<!-- Navigation-->
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+		<div class="container-fluid row flex-nowrap">
+			<div class="col-auto"><img src="img/logo.png" class="img-fluid"></div>
+			<div class="col-auto"><img src="img/logo_text.png" class="img-fluid d-none d-sm-block"></div>
+			<div class="col-auto ml-auto">
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive">
+				<span class="navbar-toggler-icon"></span>
+				</button>
+			</div>
+		</div>
+
+		<div class="collapse navbar-collapse" id="navbarResponsive">
+			<ul class="navbar-nav ml-auto">
+				<li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+				<li class="nav-item"><a class="nav-link" href="#therapie">Therapie</a></li>
+				<li class="nav-item"><a class="nav-link" href="#mich">Über Mich</a></li>
+				<li class="nav-item"><a class="nav-link" href="#praxis">Praxis</a></li>
+				<li class="nav-item"><a class="nav-link" href="#kontakt">Kontakt</a></li>
+			</ul>
+		</div>
+	</nav>
+	<!-- End Navigation-->
+
+	<!-- Start landing Page Section-->
+	<div class="landing">
+		<div class="home-wrap">
+			<div class="home-inner">
+			</div>
+		</div>
+	</div>
+
+	<div class="d-flex">
+		<div class="caption text-center">
+			<h1>Praxis für Naturheilverfahren & Energiemedizin</h1>
+		</div>
+	</div>
+
+</div>
+
+<div id="aktuelles" class="offset d-none">
+	<div id="news-content" class="container-fluid">
+		<div class="row justify-content-center" onclick="location.href='#aktuelles';">
+			<div id="news-heading" class="col-1 text-center ">
+				<i class="fas fa-angle-double-down"></i>
+			</div>
+			<div id="news-heading" class="col-auto text-center">
+				<h5>AKTUELLES</h5>
+				<div class="my-2 heading-underline"></div>
+			</div>
+			<div id="news-heading" class="col-1 text-center">
+				<i class="fas fa-angle-double-down"></i>
+			</div>
+		</div>
+		<div class="row">	
+			<div class="mt-5 mx-auto col-10">
+				<h5 id="post-title"></h5>
+				<p style="color: #1a936f;font-size: 10pt; margin-top: -4px" id="post-date"></p>
+				<div id="post-excerpt" class="text-justify"></div>
+				<div class="text-center m-4">
+					<a id="post-link" href="https://blog.kokoschinegg.com" class="btn btn-outline-dark btn">WEITERLESEN</a>
+					<br>
+					<small style="color:#b3b3b3">(aus meinem Blog)</small>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div> <!-- End of News Section-->
+
+<!-- End landing Page Section-->
+
+<!-- Start Therapie -->
+<div id="therapie" class="offset">
+
+	<div class="narrow text-center">
+		<div class="col-sm text-center">
+			<h3 class="heading">THERAPIE</h3>
+		</div>
+
+		<div class="heading-underline"></div>
+		
+		<div class="d-flex text-justify">
+			<div class="d-inline">
+				<span class="badge badge-info">Neu</span> 
+				<h4 class="mt-0 mb-1">Enzymatische Ergränzungstherapie mit Biodynamischen Präparaten </h4>
+				<p> <strong>Enzyme</strong> spielen bei allen Stoffwechselvorgängen eine entscheidende Rolle, indem sie Reaktionen in
+					Gang setzen oder beschleunigen. Oft werden sie als Biokatalysatoren bezeichnet.
+					Sie sind die „wirklichen Arbeiter“ der Zelle und sind für die Selbstregulierung biologischer Systeme
+					zuständig. Sie steuern alle wichtigen Stoffwechselfunktionen, wie z.B. die Verdauung, Muskelfunktion,
+					Denkfunktion bis hin zur Transkription und Replikation der Erbinformationen, und wirken auch als
+					Radikalfänger. Sie arbeiten am besten bei 37° C Körpertemperatur.
+				</p>
+				<p>	Bei den <strong>Ptäparaten</strong>, die ich Ihnen anbiete, werden keine Enzyme verwendet, sondern Substrate, die
+					von spezifischen Enzymen perfekt erkannt werden können, da sie biodynamisch hergestellt wurden, das
+					heißt mithilfe von Biotechnologien, welche die biologischen Zyklen des Menschen exakt reproduzieren.
+					Die absolute Neuheit besteht darin, dass während der Verarbeitungsschritte Enzyme zum Einsatz
+					kommen, die die Enzyme der Energiestoffwechselvorgänge der Zellen widerspiegeln. 10 000 Reaktionen
+					finden ständig in jeder einzelnen Zelle statt.
+				</p>
+				<p>	Diese biodynamischen Nahrungsergänzungen sind <strong>Substrate</strong>, welche die Zellen füttern, so dass
+					diese wieder in ihren optimalen Zustand der internen Umgebung zurückfinden, d.h. es kommt zu einem
+					„Reset der Zellfunktion“, wodurch das natürliche Gleichgewicht wieder hergestellt wird und
+					pathologische Faktoren in die physiologische Normalität zurückgeführt werden. Die Produkte erhöhen die
+					Energieeffizienz der Zellen, indem sie die Enzymaktivität reaktivieren, regulieren und verstärken.
+				</p>	
+				<p>	Mit dieser <strong>Enzym-Therapie</strong> können chronisch-degenerative Erkrankungen begleitend behandelt
+					werden und heilen. <br> In der Regel soll die Therapie 3 bis 4 Monate angewendet werden.	
+				</p>
+			</div>
+			<div class="d-none d-lg-block">
+				<img class="align-self-center rounded-circle p-4" src="img/enzyme.jpg" alt="Enzymatische Ergränzungstherapie">
+
+			</div>
+		</div>
+
+		<hr class="my-4">
+
+		<div class="d-flex text-justify">
+			<div class="d-none d-lg-block">
+				<img class="align-self-center rounded-circle p-4" src="img/harmonizer.jpg" alt="Harmonizer Gerät">
+			</div>
+			<div class="d-inline">
+				<h4 class="mt-0 mb-1">Behandlung mit dem Harmonizer M.E.D.-System</h4>
+				<p>	Der Harmonizer M.E.D. ist ein hochwirksames bioenergetisches Resonanzsystem. Das Ziel ist es,
+						den Körper wieder an seinen <strong>ungestörten Schwingungszustand</strong> zu erinnern. Denn alles im Universum
+						schwingt und jede Zelle unseres Körpers hat ihre eigene Schwingungsfrequenz. Die Polaritäten der
+						beiden Körperhälften und das morphische Feld werden mit dem Harmonizer-Gerät ausgeglichen; man kann
+						damit auch  Energie-informationen von Vitaminen, Mineralien und Heil-mitteln mit einspielen
+						(übertragen). Pathologische Substanzen wie Schwermetalle, Toxine, Pharmaka werden ausgeleitet.</p>
+				<ul>
+					<li>Allergien, Immunstärkung</li>
+					<li>Nahrungsmittelunverträglichkeiten</li>
+					<li>Parasitäre Belastungen (Viren, Bakterien, Pilze), Schlafstörungen</li>
+					<li>Narbenentstörung</li>
+					<li>Übersäuerung, Milieuverbesserung</li>
+					<li>Aufbau der Darmflora</li>
+				</ul>
+			</div>
+		</div>
+
+		<hr class="my-4">
+		
+		<div class="d-flex text-justify">
+			<div class="d-inline">
+				<h4 class="mt-0 mb-1">Lichtquanten-Therapie zur Korrektur von Haltungsschäden</h4>
+				<p>	Ein Grundstein für die Gesundheit des Menschen ist ein gesunder Rücken. Damit unser Körper richtig 
+					funktionieren kann, muss daher der Rücken in Ordnung sein, denn alle wichtigen Nervenbahnen liegen in 
+					der Wirbelsäule und verzweigen von dort zu den Organen. Jede Störung dieser lebens-wichtigen 
+					Nervenbahnen stört auch die Funktion der Organe, was zu den verschiedensten Störungen und 
+					Krankheiten führen kann.</p>
+					
+				<p>	Das Therapiegerät erzeugt codierte Photonen, die die <strong>Selbstregulierungskräfte</strong> des Körpers aktivieren. 
+					Die Behandlung erfolgt über einen Lichtimpuls, der über einen Lichtwellenwandler transportiert wird und 
+					u.a. die Muskulatur trainiert, um so eine Haltungskorrektur zu bewirken.</p>
+			</div>	
+			<div class="d-none d-lg-block">
+				<img class="align-self-center rounded-circle p-4" src="img/biophysio.jpg" alt="Biophysio Gerät">
+			</div>
+		</div>
+
+		<hr class="my-4">
+
+		<div class="d-flex text-justify">
+			<div class="d-inline">
+				<h4 class="mt-0 mb-1">Repuls-Therapie</h4>
+				<p> Der REPULS® Tiefenstrahler arbeitet mit gepulstem hochintensivem kaltem Rotlicht, das ohne Wärme tief in das Gewebe eindringt und 
+					Entzündungen und Schmerzen reduziert bzw. beseitigt.</p>
+
+				<p>	Er arbeitet mit einer hochintensiven gepulsten Lichtenergie mit genau definierter Wellenlänge, die auf mehreren Ebenen wirkt.
+					Die Atmungsaktivität der Mitochondrien wird signifikant erhöht, es kommt zur Steigerung der ATP-Produktion und Zellatmung und damit 
+					zu mehr <strong>Lebensenergie</strong>.
+				</p>
+				<ul>
+					<li>Akute und chronische Schmerzen</li>
+					<li>Hauterkrankungen: Akne, Ekzeme, Neurodermitis, Psoriasis</li>
+					<li>Lebererkrankungen, Darmerkrankungen</li>
+					<li>rheumatische Erkrankungen</li>
+				</ul>
+			</div>
+			<div class="d-none d-lg-block">
+					<img class="align-self-center rounded-circle p-4" src="img/repuls.jpg" alt="Repuls Gerät">
+			</div>
+		</div>
+
+		<hr class="my-4">
+
+		<div class="d-flex text-justify">
+			<div class="d-none d-lg-block">
+					<img class="align-self-center rounded-circle p-4" src="img/biophotonen.jpg" alt="Bionic Gerät">
+			</div>
+			<div class="d-inline">
+				<h4 class="mt-0 mb-1">Biophotonen-Lichttherapie</h4>
+				<p><strong>„Ohne Licht kein Leben“</strong> Prof. Fritz-Albert Popp Biophotonen sind reines Licht, welches in der DNS, die als zentraler Lichtspeicher 
+					und Informationsträger der gesamten Bausteine des menschlichen Körpers fungiert, gespeichert wird. Sie steuern unseren Stoffwechsel 
+					und <strong>regulieren lebenswichtige Prozesse</strong>. Sowohl Gesundheit als auch Krankheit hängen entscheidend davon ab, inwieweit die Zelle Licht 
+					speichern und auch abgeben kann!</p>
+
+				<p>	Wenn eine Zelle krank ist, nimmt die Menge der Biophotonen in einer Zelle ab, was sich als Folge wiederum auf das gesamte System in 
+					Form von Krankheiten auswirkt.</p>
+				<p>
+					Mit dem Biophotonen-Gerät werden dem Körper Biophotonen über die Haut zugeführt, wodurch die 
+					geschwächten Zellen wieder regenerieren können.</p>
+
+				<ul>
+					<li>Psychosomatische Erkrankungen, Depressionen, chronische Müdigkeit</li>
+					<li>Chronische Erkrankungen</li>
+					<li>Burnout-Syndrom</li>
+					<li>Bakterielle Erkrankungen wie z.B. Borreliose</li>
+					<li>Gewichtsregulation</li>
+					<li>Raucherentwöhnung, 90% Erfolg in 2-3 Tagen</li>
+					<li>Tumornachsorge</li>
+				</ul>
+			</div>
+
+		</div>
+
+		<hr class="my-4">
+
+		<div class="d-flex text-justify">
+			<div class="d-inline">
+				<h4 class="mt-0 mb-1">Sauerstoff-Atemtherapie</h4>
+				<p> Sauerstoff existiert in der Luft im Triplett-Zustand, er ist so in einem trägen, energiearmen Zustand, den der Körper nicht optimal 
+					verwerten kann. Im Atemgerät wird der Luftsauerstoff ständig von seinem natürlichen energieärmeren Triplett-Zustand in seinen 
+					energie-reichen Singulett-Zustand überführt.</p>
+
+				<p>	Das Einatmen von Singulett-Sauerstoff mittels einer Atembrille führt zu einer vermehrten Sauerstoffabgabe aus dem Blut ins Gewebe, 
+					dadurch erhöht sich die Energieproduktion innerhalb der Zelle, Sauerstoff-radikale werden reduziert, die Selbstheilungskräfte werden 
+					signifikant verstärkt.</p>
+
+				<p>	Das <strong>Airnergy-Therapiegerät</strong> wurde darüber hinaus für Menschen entwickelt, die an chronischem Energie-mangel, Konzentrations- bzw. 
+					Schlafstörungen oder an funktionellen oder organischen Beschwerden leiden bzw. wachsenden Stress- und Umweltbelastungen ausgesetzt sind.</p>
+
+				<p> Gesundheit, Vitalität, Wohlbefinden und Erholung werden deutlich gesteigert.</p>
+
+				<p>	<strong>„Airnergy hat das Geheimnis der gesunden Waldluft entschlüsselt!“</strong></p>
+
+				<ul>
+					<li>Herz- und Gefäßerkrankungen</li>
+					<li>Lungenkrankheiten wie COPD</li>
+					<li>Chronische und degenerative Erkrankungen</li>
+					<li>Stoffwechsel-Erkrankungen</li>
+					<li>Nervensystem, Autoimmun-Erkrankungen</li>
+					<li>Motivationsmangel, Depression, Burnout</li>
+					<li>Körperliche Leistungssteigerung und Regeneration, Immunsystem</li>
+					<li>Prä- und postoperative Symptome</li>
+					<li>Schlaf- und Energiemangel Konzentrationsschwäche</li>
+					<li>Stärkung der Sehkraft</li>
+				</ul>
+			</div>
+			<div class="d-none d-lg-block">
+					<img class="align-self-center rounded-circle p-4" src="img/airnergy.jpg" alt="Airnergy-Therapiegerät">
+			</div>
+		</div>
+		
+		<hr class="my-4">
+
+		<div class="d-flex text-justify">
+			<div class="d-inline">
+				<h4 class="mt-0 mb-1">Energetisches Heilen mit CALANDULA</h4>
+				<p>	Durch die Calandula-Lichtschwingung wird der Körper in einen sehr tiefen Entspannungszustand versetzt. 
+					Diese eröffnet den <strong>Zugang zum eigenen göttlichen Wesen</strong>. Körper, Seele und Geist kommen dadurch in Einklang. </p>
+
+				<p>	Bei dieser Behandlung wird jede Zelle des Körpers durch sanfte wiegende Bewegungen in eine harmo-nisierende 
+					Schwingung gebracht. Die Zellen werden mit heilsamem Licht durchflutet. Blockaden lösen sich auf.</p>
+			</div>
+			<div class="d-none d-lg-block">
+					<img class="align-self-center rounded-circle p-4" src="img/calandula.jpg" alt="Calandula">
+			</div>
+		</div>
+
+		<hr class="my-4">
+
+		<div class="d-flex text-justify">
+			<div class="d-none d-lg-block">
+					<img class="align-self-center rounded-circle p-4" src="img/health.jpg" alt="Bioscanner">
+			</div>
+			<div class="d-inline">
+				<h4 class="mt-0 mb-1">Gesundheitscheck</h4>
+				<p>	<strong>a) mit dem Bioscan - keine Blutabnahme nötig!</strong><br>
+				    Das Bioscan-Gerät misst alle lebenswichtigen Nährstoffe wie Vitamine, Mineralstoffe, Aminosäuren und Fettsäuren. 
+					Außerdem werden Organfunktionen, Schwermetalle und Hormone erfasst. Dieser komplette Gesundheits-Check vermittelt 
+					Ihnen sofort einen Eindruck, was Ihrem Körper fehlt, und zeigt Ihnen auf, welche Ände-rungen nötig bzw. sinnvoll sind.</p>
+
+				<p>	Der Bioscan ermöglicht, die Ursache von Beschwerden schnell zu finden, ohne dass Sie eine Vielzahl von Untersuchungen 
+					benötigen. Gerade bei Beschwerden, die eine Vielfalt von Ursachen haben können, ist die Messung mit dem Bioscan für 
+					Betroffene ein wahrer Segen. Aber auch zur Vorsorge ist die Analyse mit dem Gerät bestens geeignet. Die Messung erkennt 
+					Mangelerschei-nungen bzw. Belastungen, lange bevor Probleme entstehen. Dank modernster Technik ist es damit heute endlich 
+					möglich, ganz gezielt vorzusorgen und spezifischen gesundheitlichen Problemen vorzu-beugen.</p>
+						
+				<p>	<strong>b) mit dem Haemoview-Test:</strong><br>
+					Das Haemoview-Verfahren ist eine Strukturanalyse von einem Blutstropfen aus der Fingerkuppe. Durch diese Analyse werden 
+					medizinisch begründete diagnostische Aussagen ermöglicht.</p>
+					
+				<p>	Mit diesem arztpraxistauglichen Mess- und Auswerteverfahren können Untersuchungen über oxidativen und toxischen Stress, 
+					systemische Enzyme, Vitamin C, Immunsystemdefizite, Schwermetall- und Leberbelastung, hormonelle Probleme, 
+					Kalziumungleichgewicht u.a. durch-geführt werden.</p>
+			</div>
+
+		</div>
+
+		<hr class="my-4">
+
+		<div class="d-flex text-justify">
+			<div class="d-inline">
+				<h4 class="mt-0 mb-1">Darmsanierung</h4>
+				<p>	Der Mensch lebt in symbiotischem Gleichgewicht mit seinen Mikroorganismen, deshalb ist es so wichtig, das Darm-Ökosystem 
+					zu erhalten.</p>
+					
+				<p>	Mithilfe modernster molekulargenetischer Stuhl-diagnostik wird das Darm-Mikrobiom bestimmt und aufgrund der Ergebnisse 
+					wird dann mithilfe von Pro- und Präbiotika die Darmsanierung durchgeführt. Dabei spielt natürlich auch die Ernährung eine 
+					große Rolle, die gegebenenfalls korrigiert werden muss. Die Sanierung kann einen großen Beitrag zur Genesung von Krankheiten 
+					beitragen.</p>
+			</div>
+		</div>
+		<hr class="my-4">
+
+		<div class="d-flex text-justify">
+			<div class="d-inline">
+				<h4 class="mt-0 mb-1">Individuelle Ernährungsberatung</h4>
+				<p>	Die individuell passende Ernährung ist ein wichtiger, ausschlaggebender Baustein für Gesundheit und Wohlbefinden. Nicht nur, um 
+					Erkrankungen vorzubeugen, sondern auch um Therapien optimal mit der Heilkraft der Nahrung zu unterstützen. <strong>NAHRUNG = MEDIZIN!</strong></p>
+
+				<p>	Ziel meiner ernährungstherapeutischen Beratung ist, dass Sie selbst der beste Therapeut Ihrer Erkrankung werden und wissen, welche 
+					Lebens-mittel für Sie optimal und welche zu vermeiden sind.</p>
+
+				<p>	Eine gesundheitsbewusste Ernährung unterstützt Ihren Körper bei der Wiederherstellung seiner Gesundheit. Viele Menschen haben 
+					verstanden, dass sie selbst für ihre Gesundheit verantwortlich sind und daher selbst entscheidend zur Gesundung beitragen. Und 
+					was ist einfacher, als dies in Form von ausgewählten Lebensmitteln zu tun?</p>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End Therapie Section-->
+
+
+<!-- Start Mich Section -->
+<div id="mich" class="offset">
+	<!-- Start Jumbotron-->
+	<div class="jumbotron">
+		<div class="narrow">
+
+			<div class="col-12">
+				<h3 class="heading text-center">ÜBER MICH</h3>
+				<div class="heading-underline"></div>
+				<h2 class="text-center">
+					Dr. med. univ. Margarita Kokoschinegg
+				</h2>
+			</div>
+
+			<div class="row text-center">
+				<div class="col-xl-5 my-lg-auto">
+					<img src="img/margarita.jpg" class="rounded-circle img-fluid">
+				</div>
+
+				<div class="col-xl-7 pt-4">
+					<div class="mich">
+						<h4 class="text-xl-left">Beruflicher Werdegang:</h4>
+						<hr class="my-1">
+						<dl class="row text-center text-xl-left">
+							<dt class="col-xl-3 p-0">1967</dt>
+							<dd class="col-xl-9 p-0">Matura Mädchen Realgymnasium St. Ursula Wien</dd>
+							
+							<dt class="col-xl-3 p-0">1969 – 1971</dt>
+							<dd class="col-xl-9 p-0">Schule für medizinisch-technischen Laboratoriumsdienst am AKH Wien</dd>
+							
+							<dt class="col-xl-3 p-0">1971 - 1973</dt>
+							<dd class="col-xl-9 p-0">Diplomierte medizinisch technische Assistentin in einem Wiener Spital</dd>
+							
+							<dt class="col-xl-3 p-0">1973 – 1979</dt>
+							<dd class="col-xl-9 p-0">Medizinstudium an der Universität Wien</dd>
+							
+							<dt class="col-xl-3 p-0">1979 – 1983</dt>
+							<dd class="col-xl-9 p-0">Turnus am Kaiser Franz Josefs Spital Wien und St. Anna Kinderspital Wien</dd>
+							
+							<dt class="col-xl-3 p-0">1984 – März 2019</dt>
+							<dd class="col-xl-9 p-0">Privatpraxis für Naturheilverfahren in Salzburg</dd>
+							
+							<dt class="col-xl-3 px-0 pt-3 pb-0">Seit Mai 2019</dt>
+							<dd class="col-xl-9 px-0 pt-xl-3 pt-0">Praxis für Naturheilverfahren und Energiemedizin in Salzburg</dd>
+						</dl>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="row">
+				<div class="col-xl-12">
+					<h4 class="text-left">Fortbildungen:</h4>
+					<hr class="my-1">
+					<p class="text-left">
+						<strong>Heilerausbildung bei Ingeborg Bergner</strong><br>
+						<ul class="text-left">
+							<li>Lichtkomunikation 1 – 3</li>
+							<li>Heilen mit Calandula</li>
+							<li>Heilflechten</li>
+						</ul>
+					</p>
+					<p class="text-left">						
+						<strong>Heilerausbildungen bei Tom Peter Rietdorf</strong>
+						<ul class="text-left">
+							<li>KAHI Healing 1 – 7</li>
+							<li>Geistige Wirbelsäulenaufrichtung</li>
+						</ul>
+					</p>
+					<p class="text-left">	
+						<strong>Allergosan Kongress</strong>
+					</p>
+				</div>
+			</div>
+
+		</div><!--End Narrow-->
+	</div><!-- End Jumbotron-->
+</div>
+<!-- End Mich Section-->
+
+
+<!-- Start Praxis Section-->
+<div id="praxis" class="offset">
+
+	<div class="fixed-background">
+		
+		<div class="row dark text-center">
+
+			<div class="col-12">
+				<h3 class="heading">PRAXIS</h3>
+				<div class="heading-underline"></div>
+				<div class="row">
+					<div class="col-lg-8 text-justify">
+						<p>	In meiner Praxis wird Ihre Krankheit – unter Einsatz bewährter und anerkannter Naturheilmethoden und 
+							auch neuester Technologien – ganzheitlich behandelt, wodurch Ihre Selbstheilungskräfte aktiviert und 
+							Ihr Immunsystem gestärkt wird. Suchen Sie mich nicht erst dann auf, wenn Sie krank sind. Beugen Sie vor, 
+							damit Krankheit gar nicht erst entstehen kann! Übernehmen Sie die Verantwortung für Ihre Gesundheit selbst!</p>
+						
+						<p>	Denken, Fühlen, Sprechen und Handeln aus dem Herzen erzeugen im Körper heilende, harmonische Schwingungen, 
+							die den Ordnungsgrad erhöhen, denn jeder Gedanke und jedes Gefühl sind ein energetischer Impuls der als 
+							Informationsträger im Körper chemische Reaktionen auslöst. Negative Gedanken erzeugen disharmonische 
+							Schwingungen – wie zum Beispiel die von Giftstoffen, Säuren oder Krankheitserregern – und Unordnung und 
+							Chaos entstehen. Ebenso wichtig sind die Nahrungsmittel, die wir aufnehmen, und welches Wasser wir trinken. 
+							Die Art der Ernährung bestimmt unsere wichtigsten biologischen Funktionen: Atmung, Verdauung, Kreislauf und Schlaf.</p>
+						
+						<p>	Gesundheit ist also im großen Maße von unserem Lebensstil und unserer Gedankenwelt abhängig.</p>
+
+						<p>	Symptome einer Krankheit sind notwendige Heilreaktionen des Körpers, um deren Ursachen zu beseitigen. Der 
+							Mensch ist in der Lage, die Botschaft seiner Krankheit zu verstehen.</p>
+
+						<p>	Nur eine von Liebe getragene Gesamtbehandlung von Körper und Seele kann eine echte Heilung bewirken.</p>
+					</div>
+					<div class="col-lg-4">
+						<div class="row justify-content-center m-4"><img src="img/entrance.jpg" class="img-fluid rounded-circle"></div>
+						<div class="row justify-content-center m-4"><button class="btn btn-outline-light btn-lg" data-toggle="modal" data-target=".modal-map" data-lat='21.03' data-lng='105.85'>ANFAHRT</button></div>
+					</div>
+				</div>
+			</div>
+
+		</div> <!--End of the Row Dark-->
+	
+		<div class="fixed-wrap">
+			<div class="fixed fixed-praxis"></div>
+		</div>
+
+	</div> <!-- End of Fixed-Background-->
+</div>
+<!-- End Praxis Section-->
+
+<!-- Modal -->
+<div class="modal fade modal-map" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Hier ist der Anfahrtsplan zu meiner Praxis in der Kaltnergasse 2a/2</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="embed-responsive embed-responsive-4by3" id="map">
+					<iframe class="embed-responsive-item" width="750" height="450" src="https://www.google.com/maps/embed/v1/place?q=place_id:EiZLYWx0bmVyZ2Fzc2UgMiwgNTAyMCBTYWx6YnVyZywgQXVzdHJpYSIwEi4KFAoSCU_v30KSkHZHEdRARi8CjhBJEAIqFAoSCQE7LluSkHZHEV1Yh0g227Zj&key=AIzaSyA-BC4JM25cWab7fmgc4YJivoVmNhginE8">
+					</iframe>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	<!-- End of Modal -->
+
+
+<!-- Start Contact Section-->
+<div id="kontakt" class="offset">
+	<footer>
+		<div class="container-fluid justify-content-center">
+			<div class="col-12 text-center">
+				<img src="img/logo_footer.png" class="img-fluid" style="width: 30em">
+			</div>
+			<div class="col-12 text-center">
+				<p>Praxisschwerpunkt: Regulationstherapie als Vorsorge und Basistherapie chronischer Erkrankungen.</p>
+				<strong>Kontakt</strong>
+				<address>
+					Kaltnergasse 2a/2<br>
+					5020 Salzburg,<br>
+					Mobil: 0664 461 89 86<br>
+					E-Mail: <a href="mailto:m.kokoschineg@gmail.com">m.kokoschinegg@gmail.com</a>
+				</address>
+			</div>
+		</div>
+	</footer>
+</div>
+<!-- End Contact Section-->
+
+<script>
+	$(window).click(function(e) {
+		if($(".navbar-collapse").hasClass("show")){
+			$('.navbar-collapse').removeClass("show"); 
+			e.preventDefault();
+		}
+	});
+$('.navbar-collapse').click(function(event){
+  event.stopPropagation();
+});
+</script>
+
+<!--- Script Source Files -->
+<script src="https://use.fontawesome.com/releases/v5.5.0/js/all.js"></script>
+<!--- End of Script Source Files -->
+
+</body>
+</html>
+
+
+
+
