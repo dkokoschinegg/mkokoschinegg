@@ -104,7 +104,7 @@ p {
 
 .narrow {
   width: 80%;
-  margin: 1rem auto;
+  margin: 0rem auto;
   padding-top: 2rem;
 }
 
@@ -170,7 +170,7 @@ footer {
   background-color: #1a936f;
   color: #fff;
   padding: 2rem 0 2rem;
-  margin-top: 1rem;
+  margin-top: 0rem;
 }
 
 footer img {
