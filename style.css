@@ -9,7 +9,7 @@ body {
 .offset::before {
   display: block;
   content: "";
-  height: 4.2rem;
+  height: 0rem;
   margin-top: 0rem;
 }
 #aktuelles.offset::before {
