@@ -10,7 +10,7 @@ body {
   display: block;
   content: "";
   height: 4.2rem;
-  margin-top: -4.2rem;
+  margin-top: 0rem;
 }
 #aktuelles.offset::before {
   display: block;
